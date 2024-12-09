@@ -5,7 +5,7 @@
         <th scope="row">Nama Satuan</th>
         <th scope="row">Aksi</th>
     </tr>
-    <?php foreach ($data->result() as $i => $row) { ?>
+    <?php foreach ($data as $i => $row) { ?>
         <tr>
             <td><?= ++$i; ?></td>
             <td><?= $row->id_satuan; ?></td>

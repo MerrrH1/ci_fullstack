@@ -7,7 +7,7 @@
                     <a href="<?= base_url('produk'); ?>" class="btn btn-default btn-sm">
                         <span class="fa fa-refresh"></span> Refresh
                     </a>
-                    <button type="button" class="btn btn-sm btn-success">
+                    <button type="button" id="btnTambah" class="btn btn-sm btn-success">
                         <span class="fa fa-plus"></span> Tambah
                     </button>
                 </div>
@@ -77,8 +77,11 @@
                                 <label for="">Satuan <span class="text-danger">*</span></label>
                                 <select name="id_satuan" class="form-control" id="id_satuan">
                                     <option value="">- Pilih Satuan -</option>
-                                    <?php foreach ($satuan as $row) {
-                                        echo "<option value='$row->id_satuan'>$row->nama_kategori</option>";
+                                    <?php 
+                                    
+                                    var_dump($kategori);
+                                    foreach ($satuan as $row) {
+                                        echo "<option value='$row->id_satuan'>$row->nama_satuan</option>";
                                     } ?>
                                 </select>
                                 <span class="help-block"></span>
@@ -97,7 +100,7 @@
                             <div class="form-group">
                                 <label for="">Harga Beli <span class="text-danger">*</span></label>
                                 <input type="text" name="harga_beli" autocomplete="off" id="harga_beli"
-                                    class="form-control-input-sm" onkeypress="return isNumber(this, event);"
+                                    class="form-control input-sm" onkeypress="return isNumber(this, event);"
                                     placeholder="Harga Beli">
                             </div>
                         </div>
@@ -147,28 +150,28 @@
                     for (i = 0; i < response.length; i++) {
                         no++;
                         html = html + '<tr>'
-                        + '<td>' + no + '</td>'
-                        + '<td>' + response[i].nama_produk + '</td>'
-                        + '<td>' + response[i].nama_kategori + '</td>'
-                        + '<td>' + response[i].nama_satuan + '</td>'
-                        + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_beli) + '</td>'
-                        + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_jual) + '</td>'
-                        + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>'
-                        + '<td><center>' + '<span><button edit-id"' + response[i].id_produk +
-                        '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="' + response[i].id_produk + '" class="btn btn-danger btn-xs btn_hapus><i class="fa fa-trash"></i> Hapus</button></span>' + '</td>'
-                        + '</tr>';
+                            + '<td>' + no + '</td>'
+                            + '<td>' + response[i].nama_produk + '</td>'
+                            + '<td>' + response[i].nama_kategori + '</td>'
+                            + '<td>' + response[i].nama_satuan + '</td>'
+                            + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_beli) + '</td>'
+                            + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_jual) + '</td>'
+                            + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>'
+                            + '<td><center>' + '<span><button edit-id"' + response[i].id_produk +
+                            '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="' + response[i].id_produk + '" class="btn btn-danger btn-xs btn_hapus><i class="fa fa-trash"></i> Hapus</button></span>' + '</td>'
+                            + '</tr>';
                     }
                     $('#tbl_data').html(html);
                     $('#mydata').DataTable();
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
                     alert(thrownError);
                 }
             });
         }
 
-        $(document).on('click', '#btnTambah', function(e) {
+        $(document).on('click', '#btnTambah', function (e) {
             e.preventDefault();
             bEdit = false;
             $('#form_add')[0].reset();
@@ -178,15 +181,15 @@
             $('.modal-title').text("Tambah Barang");
         });
 
-        $('#tbl_data').on('click', '.btn_edit', function() {
+        $('#tbl_data').on('click', '.btn_edit', function () {
             var id_produk = $(this).attr('edit-id');
             bEdit = false;
             $.ajax({
                 url: '<?= base_url('produk/tampilkanDataById'); ?>',
                 type: 'POST',
-                data: {id_produk:id_produk},
+                data: { id_produk: id_produk },
                 dataType: 'JSON',
-                success:function(response) {
+                success: function (response) {
                     $('#form_add')[0].reset();
                     $('.form-group').removeClass('has-error');
                     $('help-block').empty();
@@ -204,7 +207,7 @@
             });
         });
 
-        $(document).on('click', '#btnSimpan', function(e) {
+        $(document).on('click', '#btnSimpan', function (e) {
             e.preventDefault();
             var $this = $(this);
             var id_produk = $('#id_produk').val();
@@ -212,9 +215,15 @@
             var barcode = $('#barcode').val();
             var id_kategori = $('select[name="id_kategori"]').val();
             var id_satuan = $('select[name="id_satuan"]').val();
-            var harga_beli = $('input[name="harga_beli"]').val().replace(/[,.]/g, '');
-            var harga_jual = $('input[name="harga_jual"]').val().replace(/[,.]/g, '');
-            var harga_pokok = $('input[name="harga_pokok"]').val().replace(/[,.]/g, '');
+            var harga_beli = $('input[name="harga_beli"]').val();
+            var harga_jual = $('input[name="harga_jual"]').val();
+            var harga_pokok = $('input[name="harga_pokok"]').val();
+            
+            if(harga_beli && harga_jual && harga_pokok) {  
+                harga_beli = harga_beli.replace(/[,.]/g, '');
+    harga_jual = harga_jual.replace(/[,.]/g, '');
+    harga_pokok = harga_pokok.replace(/[,.]/g, '');
+            }
 
             if (bEdit) {
                 var sURL = '<?= base_url('produk/perbaruiData'); ?>';
@@ -222,18 +231,18 @@
                 var sURL = '<?= base_url('produk/tambahData'); ?>'
             }
             $.ajax({
-                url:sURL,
+                url: sURL,
                 type: 'POST',
                 dataType: 'JSON',
-                data: {id_produk:id_produk, nama_produk:nama_produk, barcode:barcode, id_kategori:id_kategori, id_satuan:id_satuan, harga_beli:harga_beli, harga_jual:harga_jual, harga_pokok:harga_pokok},
-                beforeSend: function() {
+                data: { id_produk: id_produk, nama_produk: nama_produk, barcode: barcode, id_kategori: id_kategori, id_satuan: id_satuan, harga_beli: harga_beli, harga_jual: harga_jual, harga_pokok: harga_pokok },
+                beforeSend: function () {
                     $this.button('loading');
                 },
-                complete: function() {
+                complete: function () {
                     $this.button('reset');
                 },
-                success: function(data) {
-                    if(data.response == 'success') {
+                success: function (data) {
+                    if (data.response == 'success') {
                         $('#form_add')[0].reset();
                         $('.form-group').removeClass('has-error');
                         $('.help-block').empty();
@@ -242,19 +251,19 @@
                             text: "Data berhasil disimpan",
                             icon: 'success',
                             title: 'Saving Success',
-                            showConfirmButton:false,
+                            showConfirmButton: false,
                             timer: 1500
                         });
-                        $('#mydata').dataTable({"bDestroy":true}).fnDestroy();
+                        $('#mydata').dataTable({ "bDestroy": true }).fnDestroy();
                         tampil_data();
                     } else {
-                        Swal.fire('Error!','Ops1 <br>' + data.message, 'error');
+                        Swal.fire('Error!', 'Ops1 <br>' + data.message, 'error');
                     }
                 }
             });
         });
 
-        $('#tbl_data').on('click', '.btn_hapus', function(e) {
+        $('#tbl_data').on('click', '.btn_hapus', function (e) {
             e.preventDefault();
             var id_produk = $(this).attr('data-id');
             Swal.fire({
@@ -267,25 +276,25 @@
                 cancelButtonText: 'Tidak',
                 confirmButtonText: 'Ya',
                 preConfirm: () => {
-                    return new Promise(function(resolve, reject) {
+                    return new Promise(function (resolve, reject) {
                         $.ajax({
                             url: '<?= base_url('produk/hapusData'); ?>',
                             type: 'POST',
                             dataType: 'JSON',
-                            data: {id_produk:id_produk}
+                            data: { id_produk: id_produk }
                         })
-                        .done(function(data) {
-                            resolve(data)
-                        })
-                        .fail(function(data) {
-                            reject()
-                        });
+                            .done(function (data) {
+                                resolve(data)
+                            })
+                            .fail(function (data) {
+                                reject()
+                            });
                     })
                 },
                 allowOutsideClick: () => !swal.isLoading()
             }).then((result) => {
                 if (result.value) {
-                    $('#mydata').dataTable({"bDestroy":true}).fnDestroy();
+                    $('#mydata').dataTable({ "bDestroy": true }).fnDestroy();
                     tampil_data();
                     Swal.fire({
                         icon: 'success',
