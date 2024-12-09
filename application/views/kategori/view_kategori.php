@@ -190,7 +190,7 @@
                             url: '<?= base_url('kategori/hapusData') ?>',
                             type: 'POST',
                             dataType: 'JSON',
-                            data: {id_kategori:id_kategori}
+                            data: {id_produk:id_produk}
                         })
                         .done(function(data) {
                             resolve(data)
@@ -200,7 +200,7 @@
                         });
                     })
                 },
-                allowOutsideClick: () => !Swal.isLoading()
+                allowOutsideClick: () => !swal.isLoading()
             }).then((result) => {
                 if(result.value) {
                     $('#mydata').DataTable({'bDestroy': true}).fnDestroy();
@@ -210,9 +210,9 @@
                         title: "Data telah berhasil di hapus",
                         showConfirmButton: false,
                         timer: 1500
-                    })
+                    });
                 }
-            })
-        })
+            });
+        });
     });
 </script>
