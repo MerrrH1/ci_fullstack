@@ -238,7 +238,10 @@
                 url: sURL,
                 type: 'POST',
                 dataType: 'JSON',
-                data: { id_produk: id_produk, nama_produk: nama_produk, barcode: barcode, id_kategori: id_kategori, id_satuan: id_satuan, harga_beli: harga_beli, harga_jual: harga_jual, harga_pokok: harga_pokok },
+                data: { id_produk: id_produk, nama_produk: nama_produk,
+                    barcode: barcode, id_kategori: id_kategori,
+                    id_satuan: id_satuan, harga_beli: harga_beli,
+                    harga_jual: harga_jual, harga_pokok: harga_pokok },
                 beforeSend: function () {
                     $this.button('loading');
                 },
