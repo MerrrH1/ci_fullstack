@@ -43,8 +43,9 @@
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true"></span>&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus"></i> Data Supplier Barang</h4>
             </div>
             <form action="" method="post" id="form_add">
@@ -77,10 +78,7 @@
                                 <label for="">Satuan <span class="text-danger">*</span></label>
                                 <select name="id_satuan" class="form-control" id="id_satuan">
                                     <option value="">- Pilih Satuan -</option>
-                                    <?php 
-                                    
-                                    var_dump($kategori);
-                                    foreach ($satuan as $row) {
+                                    <?php foreach ($satuan as $row) {
                                         echo "<option value='$row->id_satuan'>$row->nama_satuan</option>";
                                     } ?>
                                 </select>
@@ -115,7 +113,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Harga Pokok <span class="text-danger">*</span></label>
-                                <input type="text" name="harga_Pokok" autocomplete="off" id="harga_pokok"
+                                <input type="text" name="harga_pokok" autocomplete="off" id="harga_pokok"
                                     class="form-control input-sm" onkeypress="return isNumber(this, event);"
                                     placeholder="Harga pokok">
                             </div>
@@ -124,7 +122,7 @@
                 </div>
             </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 <button type="button" class="btn btn-primary" id="btnSimpan"
                     data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing ">Simpan Data</button>
             </div>
@@ -157,8 +155,11 @@
                             + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_beli) + '</td>'
                             + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_jual) + '</td>'
                             + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>'
-                            + '<td><center>' + '<span><button edit-id"' + response[i].id_produk +
-                            '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="' + response[i].id_produk + '" class="btn btn-danger btn-xs btn_hapus><i class="fa fa-trash"></i> Hapus</button></span>' + '</td>'
+                            + '<td><center>' + '<span><button edit-id="' + response[i].id_produk +
+                            '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button>'
+                            + '<button style="margin-left: 5px;" data-id="' + response[i].id_produk 
+                            + '" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>' 
+                            + '</td>'
                             + '</tr>';
                     }
                     $('#tbl_data').html(html);
@@ -183,13 +184,14 @@
 
         $('#tbl_data').on('click', '.btn_edit', function () {
             var id_produk = $(this).attr('edit-id');
-            bEdit = false;
+            bEdit = true;
             $.ajax({
                 url: '<?= base_url('produk/tampilkanDataById'); ?>',
                 type: 'POST',
                 data: { id_produk: id_produk },
                 dataType: 'JSON',
                 success: function (response) {
+                    console.log(response);
                     $('#form_add')[0].reset();
                     $('.form-group').removeClass('has-error');
                     $('help-block').empty();
@@ -198,6 +200,8 @@
                     $('input[name="id_produk"]').val(response.id_produk);
                     $('input[name="id_kategori"]').val(response.id_kategori);
                     $('input[name="id_satuan"]').val(response.id_satuan);
+                    $('input[name="id_kategori"]').trigger('change');
+                    $('input[name="id_satuan"]').trigger('change');
                     $('input[name="barcode"]').val(response.barcode);
                     $('input[name="harga_beli"]').val(parseFloat(response.harga_beli).toFixed(0));
                     $('input[name="harga_jual"]').val(parseFloat(response.harga_jual).toFixed(0));
@@ -218,11 +222,11 @@
             var harga_beli = $('input[name="harga_beli"]').val();
             var harga_jual = $('input[name="harga_jual"]').val();
             var harga_pokok = $('input[name="harga_pokok"]').val();
-            
-            if(harga_beli && harga_jual && harga_pokok) {  
+
+            if (harga_beli && harga_jual && harga_pokok) {
                 harga_beli = harga_beli.replace(/[,.]/g, '');
-    harga_jual = harga_jual.replace(/[,.]/g, '');
-    harga_pokok = harga_pokok.replace(/[,.]/g, '');
+                harga_jual = harga_jual.replace(/[,.]/g, '');
+                harga_pokok = harga_pokok.replace(/[,.]/g, '');
             }
 
             if (bEdit) {

@@ -13,5 +13,10 @@ class Satuan extends CI_Controller {
         $this->load->view("satuan/view_satuan", $data);
         $this->load->view("templates/footer");
     }
+
+    public function tampilkanData() {
+        $data = $this->mSatuan->getData();
+        echo json_encode($data);
+    }
 }
 ?>
