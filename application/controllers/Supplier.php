@@ -26,7 +26,7 @@ class Supplier extends CI_Controller
 
 	function tambahData()
 	{
-		$this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'trim|required');
+		$this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'trim|required');
 		$this->form_validation->set_rules('jenis', 'jenis Perusahaan', 'required');
 		$this->form_validation->set_rules('kontak_person', 'Kontak Person', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
@@ -37,13 +37,13 @@ class Supplier extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$response = array('responce' => 'error', 'message' => validation_errors());
 		} else {
-			$nama_supp = $this->input->post('nama_supp');
-			$validData = $this->mSupplier->cekDuplicate($nama_supp);
+			$nama_supplier = $this->input->post('nama_supplier');
+			$validData = $this->mSupplier->cekDuplicate($nama_supplier);
 			if ($validData >= 1) {
 				$response = array('responce' => 'error', 'message' => 'Nama Supplier Barang Sudah Terdaftar..');
 			} else {
 				$data = array(
-					'nama_supp' => $nama_supp,
+					'nama_supplier' => $nama_supplier,
 					'jenis' => $this->input->post('jenis'),
 					'kontak_person' => $this->input->post('kontak_person'),
 					'no_kontak' => $this->input->post('no_kontak'),
@@ -66,7 +66,7 @@ class Supplier extends CI_Controller
 
 	function perbaruiData()
 	{
-		$this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required');
+		$this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'required');
 		$this->form_validation->set_rules('jenis', 'jenis Perusahaan', 'required');
 		$this->form_validation->set_rules('kontak_person', 'Kontak Person', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
@@ -77,9 +77,9 @@ class Supplier extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$response = array('responce' => 'error', 'message' => validation_errors());
 		} else {
-			$id_supp = $this->input->post('id_supp');
+			$id_supplier = $this->input->post('id_supplier');
 			$data = array(
-				'nama_supp' => $this->input->post('nama_supp'),
+				'nama_supplier' => $this->input->post('nama_supplier'),
 				'jenis' => $this->input->post('jenis'),
 				'kontak_person' => $this->input->post('kontak_person'),
 				'no_kontak' => $this->input->post('no_kontak'),
@@ -90,7 +90,7 @@ class Supplier extends CI_Controller
 				'alamat' => $this->input->post('alamat')
 			);
 			$data = $this->security->xss_clean($data);
-			if ($post = $this->mSupplier->updateData($id_supp, $data)) {
+			if ($post = $this->mSupplier->updateData($id_supplier, $data)) {
 				$response = array('responce' => 'success', 'message' => 'Record update Successfully');
 			} else {
 				$response = array('responce' => 'error', 'message' => 'Terjadi Kesalahan, Data GAGAL di Simpan');
@@ -101,15 +101,15 @@ class Supplier extends CI_Controller
 
 	function tampilkanDataByID()
 	{
-		$id_supp = $this->input->post('id_supp');
-		$data = $this->mSupplier->getDataById($id_supp);
+		$id_supplier = $this->input->post('id_supplier');
+		$data = $this->mSupplier->getDataById($id_supplier);
 		echo json_encode($data);
 	}
 
 	function hapusData()
 	{
 		if ($this->input->is_ajax_request()) {
-			$id = $this->input->post('id_supp');
+			$id = $this->input->post('id_supplier');
 			if ($this->mSupplier->deleteData($id)) {
 				$data = array('responce' => 'success');
 			} else {

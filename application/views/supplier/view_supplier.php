@@ -45,7 +45,7 @@
           </div>
           <form action="" method="post" id="form_add">
             <div class="modal-body">
-              <input type="hidden" id="id_supp" name="id_supp">
+              <input type="hidden" id="id_supplier" name="id_supplier">
               <div class="row">
                 <div class="col-md-2">
                   <div class="form-group">
@@ -61,7 +61,7 @@
                 <div class="col-md-10">
                   <div class="form-group">
                     <label for="">Nama Supplier</label>
-                    <input type="text" id="nama_supp" name="nama_supp" autocomplete="off" class="form-control input-sm" 
+                    <input type="text" id="nama_supplier" name="nama_supplier" autocomplete="off" class="form-control input-sm" 
                       placeholder="Nama Supplier">
                   </div>
                 </div>
@@ -148,16 +148,16 @@
             no++;
             html = html + '<tr>'
             + '<td >' + no  + '</td>'
-            + '<td><p><b>' + response[i].nama_supp + '</b>.' + response[i].jenis+ '</p></td>'
+            + '<td><p><b>' + response[i].nama_supplier + '</b>.' + response[i].jenis+ '</p></td>'
             + '<td><b><span class="label label-success">' + response[i].kontak_person + 
               '</span></b><br/><span class="label label-warning">' + response[i].no_kontak+'</span></td>'
             + '<td>' + response[i].kota + '</td>'
             + '<td>' + response[i].alamat + '</td>'
             + '<td><b><span class="label label-success">Telp: ' + response[i].no_telp + 
               '</b></span><br/><span class="label label-info">Fax: ' + response[i].no_fax +'</span></td>'
-            + '<td><center>' + '<span><button edit-id="'+response[i].id_supp+
+            + '<td><center>' + '<span><button edit-id="'+response[i].id_supplier+
               '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="'
-              +response[i].id_supp+'" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>'  + '</td>'
+              +response[i].id_supplier+'" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>'  + '</td>'
             + '</tr>';
           }
           $("#tbl_data").html(html);
@@ -183,20 +183,20 @@
 
     //Edit Kategori
     $("#tbl_data").on('click','.btn_edit',function(){
-      var id_supp = $(this).attr('edit-id');
+      var id_supplier = $(this).attr('edit-id');
       bEdit=true;
       $.ajax({
         url: '<?php echo base_url(); ?>supplier/tampilkanDataByID',
         type: 'POST',
-        data: {id_supp:id_supp},
+        data: {id_supplier:id_supplier},
         dataType: 'json',
         success: function(response){
           $('#form_add')[0].reset(); // reset form on modals
           $('.form-group').removeClass('has-error'); // clear error class
           $('.help-block').empty(); // clear error string
           $('.modal-title').text('Edit Kategori Barang'); // Set Title to Bootstrap modal title
-          $('input[name="nama_supp"]').val(response.nama_supp);
-          $('input[name="id_supp"]').val(response.id_supp);
+          $('input[name="nama_supplier"]').val(response.nama_supplier);
+          $('input[name="id_supplier"]').val(response.id_supplier);
           $('input[name="kontak_person"]').val(response.kontak_person);
           $('input[name="no_kontak"]').val(response.no_kontak);
           $('input[name="kota"]').val(response.kota);
@@ -258,7 +258,7 @@
     //Hapus Data
     $("#tbl_data").on('click','.btn_hapus',function(e){
       e.preventDefault();
-      var id_supp = $(this).attr('data-id');
+      var id_supplier = $(this).attr('data-id');
       Swal.fire({
         title: 'Hapus Data?',
         text: 'Anda Yakin menghapus Data Supplier ini?',
@@ -275,7 +275,7 @@
               url: '<?php echo base_url(); ?>supplier/hapusData',
               type: 'POST',
               dataType: "json",
-              data: {id_supp: id_supp}
+              data: {id_supplier: id_supplier}
             })
             .done(function(data) {
               resolve(data)

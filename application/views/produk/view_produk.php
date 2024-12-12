@@ -3,7 +3,7 @@
         <div class="box box-danger">
             <div class="box-header with-border color-header">
                 <h3 class="box-title"><i class="fa fa-th"></i>Data Barang</h3>
-                <div class="box-tools pull-right">
+                <div class="box-tools pull-right my-4">
                     <a href="<?= base_url('produk'); ?>" class="btn btn-default btn-sm">
                         <span class="fa fa-refresh"></span> Refresh
                     </a>
@@ -157,8 +157,8 @@
                             + '<td style="text-align: center;">' + Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>'
                             + '<td><center>' + '<span><button edit-id="' + response[i].id_produk +
                             '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button>'
-                            + '<button style="margin-left: 5px;" data-id="' + response[i].id_produk 
-                            + '" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>' 
+                            + '<button style="margin-left: 5px;" data-id="' + response[i].id_produk
+                            + '" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>'
                             + '</td>'
                             + '</tr>';
                     }
@@ -238,10 +238,12 @@
                 url: sURL,
                 type: 'POST',
                 dataType: 'JSON',
-                data: { id_produk: id_produk, nama_produk: nama_produk,
+                data: {
+                    id_produk: id_produk, nama_produk: nama_produk,
                     barcode: barcode, id_kategori: id_kategori,
                     id_satuan: id_satuan, harga_beli: harga_beli,
-                    harga_jual: harga_jual, harga_pokok: harga_pokok },
+                    harga_jual: harga_jual, harga_pokok: harga_pokok
+                },
                 beforeSend: function () {
                     $this.button('loading');
                 },

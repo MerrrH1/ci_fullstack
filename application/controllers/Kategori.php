@@ -46,29 +46,27 @@ class Kategori extends CI_Controller
         echo json_encode($response);
     }
 
-    // public function perbaruiData()
-    // {
-    //     $this->form_validation->set_rules('nama_kategori', 'Nama Kategori', 'required');
-    //     $this->form_validation->set_rules('id_kategori', 'ID Kategori', 'required');
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $response = array('response' => 'error', 'message' => validation_errors());
-    //     } else {
-    //         $nama_kategori = $this->input->post('nama_kategori');
-    //         $id_kategori = $this->input->post('id_kategori');
-    //         $validData = $this->mKategori->cekDuplicate($nama_kategori);
-    //         if ($validData >= 1) {
-    //             $response = array('response' => 'error', 'message' => "Nama Kategori Barang sudah Terdaftar...");
-    //         } else {
-    //             $data = ['nama_kategori' => $nama_kategori];
-    //             if ($this->mKategori->updateData($id_kategori, $data)) {
-    //                 $response = array('response' => 'success', 'message' => "Record Update Successfully");
-    //             } else {
-    //                 $response = array('response' => 'error', 'message' => "Terjadi Kesalahan, Data GAGAL Disimpan");
-    //             }
-    //         }
-    //     }
-    //     echo json_encode($response);
-    // }
+    function perbaruiData()
+	{
+		$this->form_validation->set_rules('nama_kategori', 'Nama Kategori', 'required');
+		$this->form_validation->set_rules('id_kategori', 'id_kategori', 'required');
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+		if ($this->form_validation->run() == FALSE) {
+			$response = array('responce' => 'error', 'message' => validation_errors());
+		} else {
+			$id_kategori = $this->input->post('id_kategori');
+			$data = array(
+				'nama_kategori' => $this->input->post('nama_kategori'),
+			);
+			$data = $this->security->xss_clean($data);
+			if ($post = $this->mKategori->updateData($id_kategori, $data)) {
+				$response = array('responce' => 'success', 'message' => 'Record update Successfully');
+			} else {
+				$response = array('responce' => 'error', 'message' => 'Terjadi Kesalahan, Data GAGAL di Simpan');
+			}
+		}
+		echo json_encode($response);
+	}
 
     public function tampilkanDataById()
     {

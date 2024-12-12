@@ -1,9 +1,7 @@
 <?php
 
 class Satuan extends CI_Controller
-{
-    private $mSatuan;
-    
+{    
     function __construct()
     {
         parent::__construct();

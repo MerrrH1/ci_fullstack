@@ -15,25 +15,25 @@ class mSupplier extends CI_Model{
 
 	//Untuk Menampilkan Data berdasarkan ID (Read)
   	function getDataById($id){
-		$this->db->where('id_supp',$id);
+		$this->db->where('id_supplier',$id);
 		return $this->db->get('tbl_m_supplier')->row();
 	}
 
   	//Update Data berdasarkan ID (Update)
 	function updateData($id,$data){
-		$this->db->where('id_supp',$id);
+		$this->db->where('id_supplier',$id);
 		return $this->db->update('tbl_m_supplier',$data);
 	}
   
   	//Menghapus data berdasarkan ID (Delete)
 	function deleteData($id){
-		$this->db->where('id_supp',$id);
+		$this->db->where('id_supplier',$id);
 		return $this->db->delete('tbl_m_supplier');
 	}
 
 	//Validasi Data Duplikat
 	function cekDuplicate($kategori) {
-        $this->db->where('nama_supp',$kategori);
+        $this->db->where('nama_supplier',$kategori);
         $query = $this->db->get('tbl_m_supplier');
         return $query->num_rows();
     }

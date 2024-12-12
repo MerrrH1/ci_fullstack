@@ -16,7 +16,7 @@
                 <ul class="treeview-menu">
                     <li><a href="<?= base_url('supplier'); ?>"><i class="fa fa-circle-o"></i> Data Supplier</a></li>
                     <li><a href="<?= base_url('pembelian/tambah'); ?>"><i class="fa fa-circle-o"></i> Pembelian Baru</a></li>
-                    <li><a href="<?= base_url('pembelian'); ?>"><i class="fa fa-circle-o"></i></a> Data Pembelian</li>
+                    <li><a href="<?= base_url('pembelian'); ?>"><i class="fa fa-circle-o"></i> Data Pembelian</a></li>
                 </ul>
             </li>
             <li><a href="<?= base_url('users'); ?>"><i class="fa fa-user"></i> <span>Users</span></a></li>

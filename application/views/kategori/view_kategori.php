@@ -3,7 +3,7 @@
         <div class="box box-danger">
             <div class="box-header with-border color-header">
                 <h3 class="box-title"><i class="fa fa-th"></i>Data Kategori Barang</h3>
-                <div class="box-tools pull-right">
+                <div class="box-tools pull-right my-4">
                     <a href="<?= base_url('kategori'); ?>" class="btn btn-default btn-sm">
                         <span class="fa fa-refresh"></span> Refresh
                     </a>
@@ -32,8 +32,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModaCenterTitle"
-    aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModaCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -47,14 +46,11 @@
                     <input type="hidden" name="id_kategori" id="id_kategori">
                     <div class="form-group">
                         <label for="nama_kategori">Nama Kategori</label>
-                        <input type="text" class="form-control" name="nama_kategori" id="nama_kategori"
-                            placeholder="Nama Kategori">
+                        <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" placeholder="Nama Kategori">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn btn-primary" id="btnSimpan"
-                            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing ">Simpan
-                            Data</button>
+                        <button type="button" class="btn btn-primary" id="btnSimpan" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing ">Simpan Data</button>
                     </div>
                 </form>
             </div>
@@ -150,7 +146,7 @@
                     $this.button('reset');
                 },
                 success: function(data) {
-                    if(data.response == "success") {
+                    if(data.responce == "success") {
                         $('#form_add')[0].reset();
                         $('.form-group').removeClass('has-error');
                         $('.help-block').empty();
